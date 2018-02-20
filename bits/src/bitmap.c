@@ -107,12 +107,23 @@ bool bitmap_test(const bitmap_t *const bitmap, const size_t bit)
 
 size_t bitmap_ffs(const bitmap_t *const bitmap)
 {
+    if(bitmap){
+        size_t result = 0;
+        for(; result < bitmap->bit_count && !bitmap_test(bitmap, result); ++result){
+            return (result == bitmap->bit_count ? SIZE_MAX : result);
+        }
+    }
     return SIZE_MAX;
-
 }
 
 size_t bitmap_ffz(const bitmap_t *const bitmap)
 {
+    if (bitmap) {
+        size_t result = 0;
+        for (; result < bitmap->bit_count && bitmap_test(bitmap, result); ++result) {
+        }
+        return (result == bitmap->bit_count ? SIZE_MAX : result);
+    }
     return SIZE_MAX;
 
 }
